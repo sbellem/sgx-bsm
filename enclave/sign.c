@@ -67,8 +67,9 @@ sgx_status_t ecall_unseal_and_sign(uint8_t *msg, uint32_t msg_size,
     double bsmresult = putPrice(380, 370, 1, 0, 100);
     print("\n[[TrustedApp]]: done computing BSM.");
     print("\n[[TrustedApp]]: next step: sign result");
-    // char output = [sizeof(bsmresult)];
-    // memcpy(output, &bsmresult, sizeof(bsmresult));
+    char output[sizeof(bsmresult)];
+    // snprintf(output, sizeof(bsmresult), "%f", bsmresult);
+    memcpy((uint8_t *const) & output, &bsmresult, sizeof(bsmresult));
 
     // Step 3: Open Context.
     if ((ret = sgx_ecc256_open_context(&p_ecc_handle)) != SGX_SUCCESS) {
@@ -78,9 +79,12 @@ sgx_status_t ecall_unseal_and_sign(uint8_t *msg, uint32_t msg_size,
 
     // Step 4: Perform ECDSA Signing.
     if ((ret =
-             sgx_ecdsa_sign(msg, msg_size, (sgx_ec256_private_t *)unsealed_data,
-                            (sgx_ec256_signature_t *)signature,
-                            p_ecc_handle)) != SGX_SUCCESS) {
+             // sgx_ecdsa_sign(msg, msg_size, (sgx_ec256_private_t
+             // *)unsealed_data,
+         sgx_ecdsa_sign(output, sizeof(output),
+                        (sgx_ec256_private_t *)unsealed_data,
+                        (sgx_ec256_signature_t *)signature, p_ecc_handle)) !=
+        SGX_SUCCESS) {
         print("\nTrustedApp: sgx_ecdsa_sign() failed !\n");
         goto cleanup;
     }
