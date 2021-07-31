@@ -81,7 +81,7 @@ sgx_status_t ecall_unseal_and_sign(uint8_t *msg, uint32_t msg_size,
     if ((ret =
              // sgx_ecdsa_sign(msg, msg_size, (sgx_ec256_private_t
              // *)unsealed_data,
-         sgx_ecdsa_sign(output, sizeof(output),
+         sgx_ecdsa_sign(output, (uint32_t)sizeof(bsmresult),
                         (sgx_ec256_private_t *)unsealed_data,
                         (sgx_ec256_signature_t *)signature, p_ecc_handle)) !=
         SGX_SUCCESS) {

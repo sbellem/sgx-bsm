@@ -43,7 +43,7 @@ services:
       #- ./verify.py:/home/photon/sgxiot/verify.py
       #- ./run_keygen.sh:/home/photon/sgxiot/run_keygen.sh
       #- ./run_quote.sh:/home/photon/sgxiot/run_quote.sh
-      #- ./run_demo_sgxra.sh:/home/photon/sgxiot/run_demo_sgxra.sh
+      - ./run_demo_sgxra.sh:/home/photon/sgxiot/run_demo_sgxra.sh
       - /var/run/docker.sock:/var/run/docker.sock
     command: ./run_demo_sgxra.sh
 

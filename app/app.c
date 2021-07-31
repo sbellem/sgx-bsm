@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
             case 8:
                 opt_quote_file = optarg;
                 break;
-            case 10:
+            case 9:
                 opt_output_file = optarg;
                 break;
         }
@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
         (opt_sign ? load_input_file(opt_input_file) : true) &&
         (opt_sign ? enclave_sign_data() : true) &&
         // save_enclave_state(opt_sealedprivkey_file) &&
-        (opt_sign ? save_output(opt_output_file) : true) &&
+        //(opt_sign ? save_output(opt_output_file) : true) &&
         (opt_sign ? save_signature(opt_signature_file) : true);
     // TODO call function to generate report with public key in it
     //(opt_keygen ? enclave_generate_quote() : true);
