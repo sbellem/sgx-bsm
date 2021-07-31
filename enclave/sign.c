@@ -15,6 +15,8 @@
 #include <sgx_tseal.h>
 #include <sgx_utils.h>
 
+#include "_bsm.c"
+
 /**
  * This function unseals the sealed data from app and then performs ECDSA
  * signing on this unsealed data.
@@ -56,6 +58,17 @@ sgx_status_t ecall_unseal_and_sign(uint8_t *msg, uint32_t msg_size,
         print("\nTrustedApp: sgx_unseal_data() failed !\n");
         goto cleanup;
     }
+
+    // Step 3: Decrypt input data
+    // TODO
+
+    // Step 4: Compute BSM
+    // (strike, s, sd, r, days) {
+    double bsmresult = putPrice(380, 370, 1, 0, 100);
+    print("\n[[TrustedApp]]: done computing BSM.");
+    print("\n[[TrustedApp]]: next step: sign result");
+    // char output = [sizeof(bsmresult)];
+    // memcpy(output, &bsmresult, sizeof(bsmresult));
 
     // Step 3: Open Context.
     if ((ret = sgx_ecc256_open_context(&p_ecc_handle)) != SGX_SUCCESS) {
