@@ -4,7 +4,7 @@ let
   sgx = import sources.sgx;
 in
 pkgs.stdenv.mkDerivation {
-  name = "sgx-iot";
+  name = "sgx-bsm";
   # FIXME not sure why but the build is non-deterministic if using src = ./.;
   # Possibly some untracked file(s) causing the problem ...?
   #src = ./.;
@@ -12,11 +12,11 @@ pkgs.stdenv.mkDerivation {
   # best, be one commit behind the commit including this file.
   src = pkgs.fetchFromGitHub {
     owner = "sbellem";
-    repo = "sgx-iot";
-    rev = "5a90f6d7927ba567a9e3c28a22a6fa0e202bc1a5";
+    repo = "sgx-bsm";
+    rev = "ea1f10e1ae7bca9877f8cbdbc6ca5cd0d44bf413";
     # Command to get the sha256 hash (note the --fetch-submodules arg):
-    # nix run -f '<nixpkgs>' nix-prefetch-github -c nix-prefetch-github --rev 5a90f6d7927ba567a9e3c28a22a6fa0e202bc1a5 sbellem sgx-iot
-    sha256 = "0rmiz08s1d27w1zfrnnkhpy7lh88hvbxqflp51030fp6mnkas65f";
+    # nix run -f '<nixpkgs>' nix-prefetch-github -c nix-prefetch-github --rev ea1f10e1ae7bca9877f8cbdbc6ca5cd0d44bf413 sbellem sgx-bsm
+    sha256 = "1rbrwh47hx3m9ifgfd15h6f6ihz8fcg8b35nf884smchd0ga1kvb";
   };
   preConfigure = ''
     export SGX_SDK=${sgx.sgx-sdk}/sgxsdk
