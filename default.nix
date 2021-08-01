@@ -13,10 +13,10 @@ pkgs.stdenv.mkDerivation {
   src = pkgs.fetchFromGitHub {
     owner = "sbellem";
     repo = "sgx-bsm";
-    rev = "ffbd7f183ecb837c24b56e2855faacc7a7d8f7de";
+    rev = "52be777b05e504989c4d92cf64cf25be4eca4475";
     # Command to get the sha256 hash (note the --fetch-submodules arg):
-    # nix run -f '<nixpkgs>' nix-prefetch-github -c nix-prefetch-github --rev ffbd7f183ecb837c24b56e2855faacc7a7d8f7de sbellem sgx-bsm
-    sha256 = "04fln8jpw5fiaf2jlk3h5fcan9q1ab6pwqcyy1wnhw7ymvfmlhyg";
+    # nix run -f '<nixpkgs>' nix-prefetch-github -c nix-prefetch-github --rev 52be777b05e504989c4d92cf64cf25be4eca4475 sbellem sgx-bsm
+    sha256 = "1jrswj3kf8nq5d3gly5ndjrfg4milgim04f3k2pjvdxwdmvgf169";
   };
   preConfigure = ''
     export SGX_SDK=${sgx.sgx-sdk}/sgxsdk
