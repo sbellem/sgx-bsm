@@ -35,7 +35,7 @@ bool enclave_sign_data() {
         enclave_id, &ecall_retval, (uint8_t *)input_buffer,
         (uint32_t)input_buffer_size, (char *)sealed_privkey_buffer,
         sealed_privkey_buffer_size, (char *)signature_buffer,
-        signature_buffer_size);
+        signature_buffer_size, (char *)output_buffer, output_buffer_size);
     if (sgx_lasterr == SGX_SUCCESS && (ecall_retval != 0)) {
         fprintf(stderr,
                 "[GatewayApp]: ERROR: ecall_unseal_and_sign returned %d\n",
@@ -119,32 +119,27 @@ cleanup:
     return ret_status;
 }
 
-// quote.c
-// bool enclave_gen_quote() {
-//    sgx_status_t ecall_retval = SGX_ERROR_UNEXPECTED;
-//    sgx_spid_t spid;
-//
-//    printf("[GatewayApp]: Calling enclave to generate quote\n");
-//    printf("[GatewayApp]: SPID: %s\n", getenv("SGX_SPID"));
-//    from_hexstring((unsigned char *)&spid, (unsigned char
-//    *)getenv("SGX_SPID"),
-//                   16);
-//
-//    /*
-//     * Invoke ECALL, 'ecall_unseal_and_quote()', to generate a quote including
-//     * the sealed public key in the report data field.
-//     */
-//    sgx_lasterr = ecall_unseal_and_quote(enclave_id, &ecall_retval,
-//                                         (char *)sealed_pubkey_buffer,
-//                                         //(char *)sealed_privkey_buffer,
-//                                         // sealed_privkey_buffer_size);
-//                                         sealed_pubkey_buffer_size, spid);
-//    if (sgx_lasterr == SGX_SUCCESS && (ecall_retval != 0)) {
-//        fprintf(stderr,
-//                "[GatewayApp]: ERROR: ecall_unseal_and_quote returned %d\n",
-//                ecall_retval);
-//        sgx_lasterr = SGX_ERROR_UNEXPECTED;
-//    }
-//
-//    return (sgx_lasterr == SGX_SUCCESS);
-//}
+bool save_output(const char *const output_file) {
+    bool ret_status = true;
+
+    printf("[GatewayApp]: Saving output\n");
+
+    FILE *foutput = open_file(output_file, "wb");
+
+    if (foutput == NULL) {
+        fprintf(stderr, "[GatewayApp]: save_output() fopen failed\n");
+        sgx_lasterr = SGX_ERROR_UNEXPECTED;
+        return false;
+    }
+
+    // if (fwrite((char *)output_buffer, output_buffer_size, 1, foutput) != 1) {
+    if (fwrite(output_buffer, output_buffer_size, 1, foutput) != 1) {
+        fprintf(stderr, "[GatewayApp]: Quote only partially written.\n");
+        sgx_lasterr = SGX_ERROR_UNEXPECTED;
+        ret_status = false;
+    }
+
+    fclose(foutput);
+
+    return ret_status;
+}

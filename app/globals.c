@@ -25,3 +25,5 @@ void *input_buffer;
 size_t input_buffer_size;
 void *quote_buffer;
 size_t quote_buffer_size;
+void *output_buffer;
+size_t output_buffer_size = 8;

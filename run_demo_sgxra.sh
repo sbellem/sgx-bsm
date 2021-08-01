@@ -36,8 +36,8 @@ echo "\nSigning sensor data:"
 ../app/app --sign \
     --enclave-path `pwd`/../enclave/enclave.signed.so \
     --sealedprivkey sealedprivkey.bin \
-    --signature Sensor_Data.signature \
-    --outputfile bsm.out \
+    --signature bsm_result.sig \
+    --outputfile bsm_result.out \
     ../Sensor_Data
 echo "Sensor data signed.\n"
 

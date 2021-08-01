@@ -34,7 +34,9 @@ enclave
             [in, size=sealed_size]char *sealed,
             size_t sealed_size,
             [out, size=signature_size] char* signature,
-            size_t signature_size);
+            size_t signature_size,
+            [out, size=ouput_buffer_size] char* output_buffer,
+            size_t ouput_buffer_size);
         
         public sgx_status_t ecall_unseal_and_quote(
             [out] sgx_report_t *report,

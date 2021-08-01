@@ -2,6 +2,7 @@ import base64
 import json
 import os
 import pathlib
+import struct
 import sys
 import time
 
@@ -129,20 +130,21 @@ time.sleep(4)
 #                          Verify Signature                                  #
 #                                                                            #
 ##############################################################################
-with open(DEMO_DIR.joinpath("Sensor_Data.signature"), "rb") as f:
+with open(DEMO_DIR.joinpath("bsm_result.sig"), "rb") as f:
     signature = f.read()
 
-with open(SOURCE_CODE.joinpath("Sensor_Data")) as f:
-    sensor_data = f.read()
+with open(DEMO_DIR.joinpath("bsm_result.out"), "rb") as f:
+    bsm_result_bytes = f.read()
 
+bsm_result = struct.unpack("<d", bsm_result_bytes)[0]
 print(
     f"{term.bold}\nVerifying signature:{term.normal}\n"
     f"{term.blue}{signature.hex()}{term.normal}\n"
-    f"{term.bold}for sensor data:{term.normal}\n"
-    f"{sensor_data}\n"
+    f"{term.bold}\nfor Black-Scholes-Merton computation result:{term.normal}\n"
+    f"{bsm_result}\n"
 )
 pubkey.verify(
-    signature, sensor_data.encode(), signature_algorithm=ec.ECDSA(hashes.SHA256()),
+    signature, bsm_result_bytes, signature_algorithm=ec.ECDSA(hashes.SHA256()),
 )
 
 print(f"{term.green}Signature verification successful!{term.normal}")

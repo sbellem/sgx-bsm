@@ -15,6 +15,7 @@ bool allocate_buffers() {
     public_key_buffer = calloc(public_key_buffer_size, 1);
     sealed_pubkey_buffer = calloc(sealed_pubkey_buffer_size, 1);
     signature_buffer = calloc(signature_buffer_size, 1);
+    output_buffer = calloc(output_buffer_size, 1);
 
     if (sealed_privkey_buffer == NULL || sealed_pubkey_buffer == NULL ||
         signature_buffer == NULL || public_key_buffer == NULL) {

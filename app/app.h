@@ -38,6 +38,8 @@ extern void *input_buffer;
 extern size_t input_buffer_size;
 extern void *quote_buffer;
 extern size_t quote_buffer_size;
+extern void *output_buffer;
+extern size_t output_buffer_size;
 
 /* Function prototypes */
 

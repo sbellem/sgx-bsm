@@ -35,7 +35,9 @@
 
 sgx_status_t ecall_unseal_and_sign(uint8_t *msg, uint32_t msg_size,
                                    char *sealed, size_t sealed_size,
-                                   char *signature, size_t signature_size) {
+                                   char *signature, size_t signature_size,
+                                   char *output_buffer,
+                                   size_t output_buffer_size) {
     sgx_status_t ret = SGX_ERROR_UNEXPECTED;
     sgx_ecc_state_handle_t p_ecc_handle = NULL;
 
@@ -70,6 +72,7 @@ sgx_status_t ecall_unseal_and_sign(uint8_t *msg, uint32_t msg_size,
     char output[sizeof(bsmresult)];
     // snprintf(output, sizeof(bsmresult), "%f", bsmresult);
     memcpy((uint8_t *const) & output, &bsmresult, sizeof(bsmresult));
+    memcpy((uint8_t *)output_buffer, &bsmresult, sizeof(bsmresult));
 
     // Step 3: Open Context.
     if ((ret = sgx_ecc256_open_context(&p_ecc_handle)) != SGX_SUCCESS) {
