@@ -60,9 +60,9 @@ with open("demo_sgx/ias_report.json", "w") as f:
 import auditee  # noqa
 
 auditee.verify_mrenclave(
-    "/usr/src/sgxiot/",
-    "/usr/src/sgxiot/enclave/enclave.signed.so",
-    ias_report="/usr/src/sgxiot/demo_sgx/ias_report.json",
+    "/usr/src/sgxbsm/",
+    "/usr/src/sgxbsm/enclave/enclave.signed.so",
+    ias_report="/usr/src/sgxbsm/demo_sgx/ias_report.json",
 )
 
 

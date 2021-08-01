@@ -17,7 +17,7 @@ from cryptography.hazmat.primitives import hashes, serialization
 init_colorama()
 term = Terminal()
 
-SOURCE_CODE = pathlib.Path("/home/photon/sgxiot")
+SOURCE_CODE = pathlib.Path("/home/photon/sgxbsm")
 SIGNED_ENCLAVE = SOURCE_CODE.joinpath("enclave", "enclave.signed.so")
 DEMO_DIR = SOURCE_CODE.joinpath("demo_sgx")
 IAS_REPORT = SOURCE_CODE.joinpath("demo_sgx/ias_report.json")
@@ -70,7 +70,7 @@ else:
         f"{term.red}Attestatin verification failed, with status: "
         f"{res.status_code} and reason: {res.reason}\n"
         f"Did you set SGX_SPID and IAS_PRIMARY_KEY?\n"
-        "See https://github.com/sbellem/sgx-iot#set-environment-variables{term.normal}"
+        "See https://github.com/sbellem/sgx-bsm#set-environment-variables{term.normal}"
     )
 
 print(f"{term.bold}IAS response is: {term.normal}")

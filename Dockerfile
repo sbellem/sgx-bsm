@@ -172,7 +172,7 @@ RUN apt-get update && apt-get install -y \
                 git \
         && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/sgxiot
+WORKDIR /usr/src/sgxbsm
 
 ENV SGX_SDK /opt/sgxsdk
 ENV PATH $PATH:$SGX_SDK/bin:$SGX_SDK/bin/x64
@@ -196,8 +196,8 @@ RUN make untrusted
 ##############################################################################
 FROM demo-base
 
-RUN mkdir /home/photon/sgxiot
-WORKDIR /home/photon/sgxiot
+RUN mkdir /home/photon/sgxbsm
+WORKDIR /home/photon/sgxbsm
 
 COPY --chown=photon:photon common common
 COPY --chown=photon:photon enclave enclave
@@ -213,5 +213,5 @@ COPY --chown=photon:photon .auditee.yml \
                            ./
 
 COPY --from=build-enclave --chown=photon:photon /usr/src/result/bin/enclave.signed.so enclave/enclave.signed.so
-COPY --from=build-app --chown=photon:photon /usr/src/sgxiot/app app
+COPY --from=build-app --chown=photon:photon /usr/src/sgxbsm/app app
 COPY --from=initc3/linux-sgx:2.14-ubuntu20.04 --chown=photon:photon /opt/sgxsdk /opt/sgxsdk
